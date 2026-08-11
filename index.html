@@ -15,14 +15,49 @@
   <link rel="apple-touch-icon" href="icon-180.png">
   <link rel="icon" type="image/png" href="icon-192.png">
 
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
   <style>
-    html, body { margin: 0; height: 100%; background: #45003F; overflow: hidden; }
-    iframe { border: 0; width: 100%; height: 100%; display: block; }
+    :root { --morado:#61115E; --morado-osc:#45003F; --morado-claro:#8A2A86; --naranja:#FF6A00; --naranja-osc:#E85D00; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 20px; padding: 28px;
+      text-align: center; color: #fff;
+      font-family: "General Sans", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(1000px 500px at 50% -10%, var(--morado-claro), transparent),
+                  linear-gradient(135deg, var(--morado-osc), var(--morado));
+    }
+    img.logo { width: 116px; height: 116px; border-radius: 26px; box-shadow: 0 14px 34px rgba(0,0,0,.45); }
+    h1 { margin: 4px 0 0; font-size: 26px; font-weight: 700; letter-spacing: .3px; }
+    p.msg { margin: 0; opacity: .85; font-size: 14px; max-width: 300px; }
+    a.btn {
+      margin-top: 4px; background: linear-gradient(135deg, var(--naranja), var(--naranja-osc));
+      color: #fff; text-decoration: none; font-weight: 700; font-size: 16px;
+      padding: 15px 34px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,.5);
+      box-shadow: 0 10px 26px rgba(255,106,0,.42);
+    }
+    .hint { margin-top: 10px; font-size: 12px; opacity: .7; max-width: 320px; line-height: 1.5; }
   </style>
 </head>
 <body>
-  <iframe id="app"
-          src="https://script.google.com/a/macros/liverpool.com.mx/s/AKfycbwCDjlkJyj-KKYk3-AUWxp_v6Z2KLcHZyJ5hzPExoqsqyvfN0N7gUDzCXh_yDGuo04hJQ/exec"
-          allow="clipboard-read; clipboard-write; camera; microphone"></iframe>
+  <img class="logo" src="icon-192.png" alt="Notificaciones">
+  <h1>Notificaciones</h1>
+  <p class="msg" id="msg">Toca el botón para abrir la app.</p>
+  <a class="btn" id="go"
+     href="https://script.google.com/a/macros/liverpool.com.mx/s/AKfycbwCDjlkJyj-KKYk3-AUWxp_v6Z2KLcHZyJ5hzPExoqsqyvfN0N7gUDzCXh_yDGuo04hJQ/exec">
+     Abrir Notificaciones
+  </a>
+  <div class="hint">Para instalarla en tu teléfono: usa <b>“Agregar a inicio”</b> (iPhone) o <b>“Instalar app”</b> (Android). Al abrirla desde el ícono, entrará sola.</div>
+
+  <script>
+    // Si se abrió desde el ícono de la pantalla de inicio (modo app), abre la app directo.
+    var standalone = (window.navigator.standalone === true) ||
+                     (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    if (standalone) {
+      document.getElementById('msg').textContent = 'Abriendo…';
+      location.replace(document.getElementById('go').href);
+    }
+  </script>
 </body>
 </html>
